@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>User Registration</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<a href="registration.html">Click here to Registration page</a>
+<div class="jumbotron text-center">
+  <h1>Welcome</h1>
+  <p>Please sign in</p>
+</div>
+  
+<div class="container">
+
+ <form class="form-signup" method="post" id="signup-form" action="Login">
+  
+  <div class="form-group">
+        <input type="text" class="form-control" placeholder="Account Name" name="email" id="email" />
+        <span id="check-e"></span>
+        </div>
+        
+        <div class="form-group">
+       		 <input type="password" class="form-control" placeholder="Password" name="password" id="password" />
+  		 </div>
+       
+  	<div class="form-group">
+            <button type="submit" class="btn btn-default" name="submit" id="submit">
+     		 <span class="glyphicon glyphicon-log-in"></span> &nbsp; Sign In
+   </button> 
+   </div>  
+
+       <div class="alert alert-success" id="success" style="display: none">
+       </div>
+       
+       <div class="alert alert-warning" id="error" style="display: none">
+       </div>
+  
+  </form>
+  <div>user:1@1.com <p>
+  password:1<p>
+  user:3@3.com <p>
+  password:3<p> </div>
+  <p>
+  <p><br><div>
+  MP:2@2.com<p>
+  password:2<p>
+  MP:4@4.com<p>
+  password:4<p></div>
+ 
+</div>
+
+
+<script>
+
+
+$(function() {
+
+var successmsg_email=$("#success");
+var failmsg_email=$("#error");
+var passwd=$("#password");
+var email=$("#email");
+	 
+$("#email").change(function(){	 
+    $.ajax({
+    type: "POST",
+	 url: "./servlets/Check_NIC",
+	 data:email,
+	 success: function(data){
+		 console.log(data);
+		var result=parseInt(data);
+		 successmsg_email.hide();
+		 failmsg_email.hide();
+
+		 if( result==0){
+		 		 
+		 	 failmsg_email.show();
+		 	failmsg_email.html("please register before browseing");
+		 	 $("#submit").prop('disabled', true);
+		      
+		 }
+		
+		 else{
+		 	
+		 	 successmsg_email.show();
+		 	 successmsg_email.html("valid user");
+		 	$("#submit").prop('disabled', false);
+		 }			 
+	 },
+	 error: function(){alert("failure");}	 
+	 
+	 });
+ });
+}); 
+ 
+</script>
+
+</body>
+</html>
